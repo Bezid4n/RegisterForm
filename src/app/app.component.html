@@ -2,45 +2,47 @@
   <div class="row">
     <div class="col">
       <h1>Register</h1>
-      <form action="" [formGroup]="myForm">
+      <form (ngSubmit)="submit()" [formGroup]="myForm">
         <div formGroupName="personalData">
           <div class="mb-3 ">
             <label for="" class="form-label">FirstName</label>
-            <input class="form-control" id="" type="text" formControlName="firstName">
+            <input class="form-control"  type="text" formControlName="firstName">
           </div>
           <div class="mb-3">
             <label for="" class="form-label">LastName</label>
-            <input class="form-control" id="" type="text" formControlName="lastName">
+            <input class="form-control"  type="text" formControlName="lastName">
           </div>
           <div class="mb-3">
             <label for="" class="form-label">BirthDate</label>
-            <input class="form-control" id="" type="date" formControlName="birthDate">
+            <input class="form-control"  type="date" formControlName="birthDate">
           </div>
         </div>
         <hr>
         <div formGroupName="userData">
           <div class="mb-3 ">
             <label for="" class="form-label">UserName</label>
-            <input class="form-control" id="" type="text" formControlName="userName">
+            <input class="form-control"  type="text" formControlName="userName">
           </div>
           <div class="mb-3">
             <label for="" class="form-label">Password</label>
-            <input class="form-control" id="" type="password" formControlName="password">
+            <input class="form-control"  type="password" formControlName="password">
           </div>
           <div class="mb-3">
             <label for="" class="form-label">Re-Password</label>
-            <input class="form-control" id="" type="password" formControlName="rePassword">
+            <input class="form-control"  type="password" formControlName="rePassword">
           </div>
           <div class="mb-3">
             <label for="" class="form-label">Email</label>
-            <input class="form-control" id="" type="text" formControlName="email">
+            <input class="form-control"  type="text" formControlName="email">
+            <em *ngIf="checkError('userData.email','email')">Email is Invalid!</em>
+            <em *ngIf="checkError('userData.email','required')">Email is Required!</em>
           </div>
         </div>
         <hr>
         <div formGroupName="secretData">
           <div class="mb-3">
             <label for="" class="form-label">Secret Question</label>
-            <select name="secret" id="" formControlName="secretQuestion">
+            <select class="form-control" name="secret" id="" formControlName="secretQuestion">
               <option value="pet">Your first pet?</option>
               <option value="teacher">Your first teacher?</option>
               <option value="color">Your favorite color?</option>
@@ -49,9 +51,11 @@
           </div>
           <div class="mb-3">
             <label for="" class="form-label">Secret Answer</label>
-            <input class="form-control" id="" type="text" formControlName="secretAnswer">
+            <input class="form-control"  type="text" formControlName="secretAnswer">
           </div>
         </div>
+        <button class="btn btn-primary" [disabled]="myForm.invalid">Save</button>
+        <button class="btn btn-danger" (click)="reset()">Reset</button>
       </form>
     </div>
   </div>
