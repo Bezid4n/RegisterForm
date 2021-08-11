@@ -45,10 +45,11 @@
         <div formArrayName="address">
           <div class="mb-3"  *ngFor="let address of getAddressCtrls().controls; index as i"  >
             <div [formGroupName]="i">
-              <input class="form-control"  type="text" formControlName="city" >
-              <input class="form-control"  type="text" formControlName="street" >
-              <input class="form-control"  type="text" formControlName="alley" >
-              <input class="form-control"  type="text" formControlName="no" >
+              <input class="form-control"  type="text" formControlName="city"  placeholder="City">
+              <input class="form-control"  type="text" formControlName="street" placeholder="Street">
+              <input class="form-control"  type="text" formControlName="alley" placeholder="Alley">
+              <input class="form-control"  type="text" formControlName="no" placeholder="No">
+              <hr>
            </div>
           </div>
         </div>

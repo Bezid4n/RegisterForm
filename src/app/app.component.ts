@@ -1,6 +1,6 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +12,10 @@ export class AppComponent implements OnInit {
   myForm = new FormGroup({
 
     userData: new FormGroup({
-      userName: new FormControl(null,[Validators.required]),
+      userName: new FormControl(null,[Validators.required, this.forbiddenUsername]),
       password: new FormControl(null,[Validators.required]),
       rePassword: new FormControl(null,[Validators.required]),
-      email: new FormControl(null,[Validators.required, Validators.email])
+      email: new FormControl(null,[Validators.required, Validators.email], [this.forbiddenEmail as AsyncValidatorFn] )
 
     }),
 
@@ -37,7 +37,8 @@ export class AppComponent implements OnInit {
   })
 
   submit(){
-    console.log(this.myForm)
+    console.log(this.myForm);
+
   }
   reset(){
     this.myForm.reset()
@@ -69,6 +70,26 @@ export class AppComponent implements OnInit {
 
   getAddressCtrls(){
     return (this.myForm.get('address') as FormArray);
+  }
+
+  forbiddenUsername(control: FormControl): {[s:string] : boolean} | null{
+    let users= ['admin','modir'];
+    if(users.indexOf(control.value)>-1){
+      return {forbidden: true}
+    }
+    return null
+  }
+
+  forbiddenEmail(control: FormControl): Promise<ValidationErrors | null>{
+    let p= new Promise<ValidationErrors | null>((resolve,reject) => {
+     setTimeout(() => {
+      if(control.value === "bezid4n@gmail.com")
+        resolve({forbidden: true})
+      resolve(null)
+
+     }, 2000);
+    });
+    return p;
   }
 
   constructor(){}
