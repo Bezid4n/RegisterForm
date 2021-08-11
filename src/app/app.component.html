@@ -3,26 +3,12 @@
     <div class="col">
       <h1>Register</h1>
       <form (ngSubmit)="submit()" [formGroup]="myForm">
-        <div formGroupName="personalData">
-          <div class="mb-3 ">
-            <label for="" class="form-label">FirstName</label>
-            <input class="form-control"  type="text" formControlName="firstName">
-          </div>
-          <div class="mb-3">
-            <label for="" class="form-label">LastName</label>
-            <input class="form-control"  type="text" formControlName="lastName">
-          </div>
-          <div class="mb-3">
-            <label for="" class="form-label">BirthDate</label>
-            <input class="form-control"  type="date" formControlName="birthDate">
-          </div>
-        </div>
-        <hr>
         <div formGroupName="userData">
           <div class="mb-3 ">
             <label for="" class="form-label">UserName</label>
             <input class="form-control"  type="text" formControlName="userName">
           </div>
+          <button class="btn btn-success" (click)="suggest()">Suggest UserName</button>
           <div class="mb-3">
             <label for="" class="form-label">Password</label>
             <input class="form-control"  type="password" formControlName="password">
@@ -54,6 +40,19 @@
             <input class="form-control"  type="text" formControlName="secretAnswer">
           </div>
         </div>
+        <hr>
+        <button class="btn btn-sm btn-primary" (click)="addAddress()">+ Address</button>
+        <div formArrayName="address">
+          <div class="mb-3"  *ngFor="let address of getAddressCtrls().controls; index as i"  >
+            <div [formGroupName]="i">
+              <input class="form-control"  type="text" formControlName="city" >
+              <input class="form-control"  type="text" formControlName="street" >
+              <input class="form-control"  type="text" formControlName="alley" >
+              <input class="form-control"  type="text" formControlName="no" >
+           </div>
+          </div>
+        </div>
+
         <button class="btn btn-primary" [disabled]="myForm.invalid">Save</button>
         <button class="btn btn-danger" (click)="reset()">Reset</button>
       </form>

@@ -1,3 +1,4 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -9,11 +10,6 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 export class AppComponent implements OnInit {
 
   myForm = new FormGroup({
-    personalData: new FormGroup({
-      firstName: new FormControl(null,[Validators.required]),
-      lastName: new FormControl(null,[Validators.required]),
-      birthDate: new FormControl()
-    }),
 
     userData: new FormGroup({
       userName: new FormControl(null,[Validators.required]),
@@ -28,12 +24,14 @@ export class AppComponent implements OnInit {
       secretAnswer: new FormControl(null,[Validators.required]),
     }),
 
-      address: new FormArray([new FormGroup({
+      address: new FormArray([ new FormGroup({
         city: new FormControl(),
         street: new FormControl(),
         alley: new FormControl(),
         no: new FormControl()
-      })])
+      })]),
+
+
 
 
   })
@@ -54,6 +52,23 @@ export class AppComponent implements OnInit {
     }
     return false;
 
+  }
+
+  suggest(){
+    this.myForm.patchValue({userData:{userName:'Behzad'}})
+  }
+
+  addAddress(){
+    this.getAddressCtrls().push(new FormGroup({
+      city: new FormControl(),
+      street: new FormControl(),
+      alley: new FormControl(),
+      no: new FormControl()
+    }));
+  }
+
+  getAddressCtrls(){
+    return (this.myForm.get('address') as FormArray);
   }
 
   constructor(){}
