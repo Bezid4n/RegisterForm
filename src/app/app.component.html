@@ -3,29 +3,53 @@
     <div class="col">
       <h1>Register</h1>
       <form (ngSubmit)="submit()" [formGroup]="myForm">
-        <div formGroupName="userData">
-          <div class="mb-3 ">
-            <label for="" class="form-label">UserName</label>
-            <input class="form-control"  type="text" formControlName="userName">
+        <div class="row">
+          <div formGroupName="userData" class="col-md-6">
+            <div class="row">
+              <div class="mb-3 col-md-6 ">
+                <label for="" class="form-label">UserName</label>
+                <input class="form-control"  type="text" formControlName="userName">
+                <button class="btn btn-sm btn-success" (click)="suggest()">Suggest UserName</button>
+              </div>
+
+              <div class="mb-3 col-md-6">
+                <label for="" class="form-label">Email</label>
+                <input class="form-control"  type="text" formControlName="email">
+                <em *ngIf="checkError('userData.email','email')">Email is Invalid!</em>
+                <em *ngIf="checkError('userData.email','required')">Email is Required!</em>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label for="" class="form-label">Password</label>
+                <input class="form-control"  type="password" formControlName="password">
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="" class="form-label">Re-Password</label>
+                <input class="form-control"  type="password" formControlName="rePassword">
+              </div>
+            </div>
+
+
           </div>
-          <button class="btn btn-success" (click)="suggest()">Suggest UserName</button>
-          <div class="mb-3">
-            <label for="" class="form-label">Password</label>
-            <input class="form-control"  type="password" formControlName="password">
+          <div  class="col-md-6">
+            <button class="btn btn-sm btn-primary" (click)="addAddress()">+ Address</button>
+            <div formArrayName="address" >
+              <div class="mb-3"  *ngFor="let address of getAddressCtrls().controls; index as i"  >
+                <div [formGroupName]="i">
+                  <input class="form-control"  type="text" formControlName="city"  placeholder="City">
+                  <input class="form-control"  type="text" formControlName="street" placeholder="Street">
+                  <input class="form-control"  type="text" formControlName="alley" placeholder="Alley">
+                  <input class="form-control"  type="text" formControlName="no" placeholder="No">
+                  <hr>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="" class="form-label">Re-Password</label>
-            <input class="form-control"  type="password" formControlName="rePassword">
-          </div>
-          <div class="mb-3">
-            <label for="" class="form-label">Email</label>
-            <input class="form-control"  type="text" formControlName="email">
-            <em *ngIf="checkError('userData.email','email')">Email is Invalid!</em>
-            <em *ngIf="checkError('userData.email','required')">Email is Required!</em>
-          </div>
+
         </div>
         <hr>
-        <div formGroupName="secretData">
+        <div formGroupName="secretData" class="row">
           <div class="mb-3">
             <label for="" class="form-label">Secret Question</label>
             <select class="form-control" name="secret" id="" formControlName="secretQuestion">
@@ -38,19 +62,6 @@
           <div class="mb-3">
             <label for="" class="form-label">Secret Answer</label>
             <input class="form-control"  type="text" formControlName="secretAnswer">
-          </div>
-        </div>
-        <hr>
-        <button class="btn btn-sm btn-primary" (click)="addAddress()">+ Address</button>
-        <div formArrayName="address">
-          <div class="mb-3"  *ngFor="let address of getAddressCtrls().controls; index as i"  >
-            <div [formGroupName]="i">
-              <input class="form-control"  type="text" formControlName="city"  placeholder="City">
-              <input class="form-control"  type="text" formControlName="street" placeholder="Street">
-              <input class="form-control"  type="text" formControlName="alley" placeholder="Alley">
-              <input class="form-control"  type="text" formControlName="no" placeholder="No">
-              <hr>
-           </div>
           </div>
         </div>
 
