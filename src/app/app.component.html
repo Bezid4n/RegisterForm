@@ -25,11 +25,13 @@
                 <label for="" class="form-label">Password</label>
                 <input class="form-control"  type="password" formControlName="password">
                 <em *ngIf="checkError('userData.password','required')">Password is Required!</em>
+                <em *ngIf="checkError('userData.password','pattern')">Password is not Safe!</em>
               </div>
               <div class="mb-3 col-md-6">
                 <label for="" class="form-label">Re-Password</label>
                 <input class="form-control"  type="password" formControlName="rePassword">
                 <em *ngIf="checkError('userData.rePassword','required')">Re-Password is Required!</em>
+
               </div>
             </div>
 

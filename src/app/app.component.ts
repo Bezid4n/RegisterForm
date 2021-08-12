@@ -13,8 +13,9 @@ export class AppComponent implements OnInit {
 
     userData: new FormGroup({
       userName: new FormControl(null,[Validators.required, this.forbiddenUsername]),
-      password: new FormControl(null,[Validators.required]),
-      rePassword: new FormControl(null,[Validators.required]),
+      password: new FormControl(null,[Validators.required,
+        Validators.pattern('((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30})')]),
+      rePassword: new FormControl(null,[Validators.required], [this.checkPass.bind(this) as AsyncValidatorFn] ),
       email: new FormControl(null,[Validators.required, Validators.email], [this.forbiddenEmail as AsyncValidatorFn] )
 
     }),
@@ -92,8 +93,22 @@ export class AppComponent implements OnInit {
     return p;
   }
 
+  checkPass(control: FormControl): Promise<ValidationErrors | null>{
+    let Pass= this.myForm.get('userData.password')?.value;
+    let p= new Promise<ValidationErrors | null>((resolve,reject) => {
+     setTimeout(() => {
+      if(control.value != Pass)
+        resolve({forbidden: true})
+      resolve(null)
+
+     }, 2000);
+    });
+    return p;
+  }
+
   constructor(){}
   ngOnInit(): void {
+
   }
   title = 'RegisterForm';
 }
