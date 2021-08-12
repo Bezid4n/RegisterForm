@@ -10,6 +10,7 @@
                 <label for="" class="form-label">UserName</label>
                 <input class="form-control"  type="text" formControlName="userName">
                 <button class="btn btn-sm btn-success" (click)="suggest()">Suggest UserName</button>
+                <em *ngIf="checkError('userData.userName','required')">UserName is Required!</em>
               </div>
 
               <div class="mb-3 col-md-6">
@@ -23,17 +24,42 @@
               <div class="mb-3 col-md-6">
                 <label for="" class="form-label">Password</label>
                 <input class="form-control"  type="password" formControlName="password">
+                <em *ngIf="checkError('userData.password','required')">Password is Required!</em>
               </div>
               <div class="mb-3 col-md-6">
                 <label for="" class="form-label">Re-Password</label>
                 <input class="form-control"  type="password" formControlName="rePassword">
+                <em *ngIf="checkError('userData.rePassword','required')">Re-Password is Required!</em>
               </div>
             </div>
 
 
           </div>
+
           <div  class="col-md-6">
-            <button class="btn btn-sm btn-primary" (click)="addAddress()">+ Address</button>
+            <div formGroupName="secretData" class="row">
+              <div class="mb-3">
+                <label for="" class="form-label">Secret Question</label>
+                <select class="form-control" name="secret" id="" formControlName="secretQuestion">
+                  <option value="pet">Your first pet?</option>
+                  <option value="teacher">Your first teacher?</option>
+                  <option value="color">Your favorite color?</option>
+                  <option value="team">Your favorite team?</option>
+                </select>
+              </div>
+              <p></p>
+              <p></p>
+              <div class="mb-3">
+                <label for="" class="form-label">Secret Answer</label>
+                <input class="form-control"  type="text" formControlName="secretAnswer">
+                <em *ngIf="checkError('secretData.secretAnswer','required')">Secret Answer is Required!</em>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <hr>
+        <button class="btn btn-sm btn-primary" (click)="addAddress()">+ Address</button>
             <div formArrayName="address" >
               <div class="mb-3"  *ngFor="let address of getAddressCtrls().controls; index as i"  >
                 <div [formGroupName]="i">
@@ -45,25 +71,6 @@
                 </div>
               </div>
             </div>
-          </div>
-
-        </div>
-        <hr>
-        <div formGroupName="secretData" class="row">
-          <div class="mb-3">
-            <label for="" class="form-label">Secret Question</label>
-            <select class="form-control" name="secret" id="" formControlName="secretQuestion">
-              <option value="pet">Your first pet?</option>
-              <option value="teacher">Your first teacher?</option>
-              <option value="color">Your favorite color?</option>
-              <option value="team">Your favorite team?</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="" class="form-label">Secret Answer</label>
-            <input class="form-control"  type="text" formControlName="secretAnswer">
-          </div>
-        </div>
 
         <button class="btn btn-primary" [disabled]="myForm.invalid">Save</button>
         <button class="btn btn-danger" (click)="reset()">Reset</button>
